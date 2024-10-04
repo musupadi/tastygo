@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'Constant/Colors.dart';
 import 'Constant/FontSize.dart';
 import 'Model/Ascendant.dart';
+import 'Route.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -141,7 +142,7 @@ class _LoginState extends State<Login> {
                                             InkWell(
                                               onTap: () {
                                                 // Checker();
-                                                // toDashboard(context, false);
+                                                toDashboard(context, false);
                                               },
                                               child: Container(
                                                   width: 200,
