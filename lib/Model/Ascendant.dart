@@ -4,10 +4,62 @@ import 'package:flutter/material.dart';
 
 import '../Constant/Colors.dart';
 import '../Constant/FontSize.dart';
+import '../Route.dart';
 
 String ImageDummy = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkxGINkXzKO1VE-jS8ED8i08kpb_2pC9lR0A&s";
 int TimeoutTimeSecond(){
   return 10;
+}
+LoginSuccessMessage(BuildContext context,name){
+  showGeneralDialog(
+    barrierLabel: '',
+    barrierDismissible: true,
+    transitionDuration: Duration(milliseconds: 200),
+    context: context,
+    pageBuilder: (context, animation, secondaryAnimation) {
+      return Container();
+    },
+    transitionBuilder: (context, animation, secondaryAnimation, child) {
+      return ScaleTransition(
+        scale: Tween<double>(begin: 0.5,end: 1.0).animate(animation),
+        child: AlertDialog(
+          title: Center(
+              child: Text("Login Success !")
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text("You are logged in as "+name,textAlign: TextAlign.center),
+              const SizedBox(height: 10),
+              InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                  toDashboard(context, false);
+                },
+                child: Container(
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.red
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Center(child: Text("Close",style: TextStyle(color: Colors.white),)),
+                  ),
+                ),
+              )
+            ],
+          ),
+          shape: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide.none
+          ),
+        ),
+      );
+    },
+  );
 }
 String timeAgo(String date) {
   DateTime dateTime = DateTime.parse(date); // Parsing string to DateTime
