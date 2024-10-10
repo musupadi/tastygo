@@ -1,2 +1,2 @@
-0 Gelas
-1 Mouse
+0 Dompet
+1 Nametag

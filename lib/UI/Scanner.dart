@@ -16,6 +16,7 @@ class Scanner extends StatefulWidget {
 class _ScannerState extends State<Scanner> {
   CameraController? cameraController;
   bool isDetecting = false;
+  bool isDialogShowing = false; // Tambahkan ini untuk melacak apakah dialog terbuka
   var _recognitions = [];
   String result = '';
   int selectedCameraIndex = 0; // Untuk melacak kamera depan/belakang
@@ -51,7 +52,7 @@ class _ScannerState extends State<Scanner> {
       setState(() {});
 
       cameraController!.startImageStream((CameraImage img) {
-        if (!isDetecting) {
+        if (!isDetecting && !isDialogShowing) { // Deteksi hanya jika tidak ada dialog
           isDetecting = true;
           detectImage(img);
         }
@@ -84,11 +85,98 @@ class _ScannerState extends State<Scanner> {
 
       int endTime = DateTime.now().millisecondsSinceEpoch;
       print("Inference took ${endTime - startTime}ms");
+
+      // Cek apakah ada yang lebih dari 90%
+      if (recognitions != null && recognitions.isNotEmpty) {
+        for (var recog in recognitions) {
+          double confidence = recog["confidence"] ?? 0.0;
+          String label = recog["label"] ?? 'Unknown';
+          if (confidence > 0.9) {
+            await _MessageDialog(label, confidence); // Menunggu hingga dialog ditutup
+            break; // Hentikan setelah dialog ditampilkan
+          }
+        }
+      }
     } catch (e) {
       print("Error during image detection: $e");
     } finally {
-      isDetecting = false;
+      isDetecting = false; // Set kembali ke false untuk memulai deteksi selanjutnya
     }
+  }
+
+  Future<void> _MessageDialog(String label,double confidence) async{
+    isDialogShowing = true; // Tandai bahwa dialog sedang tampil
+    await showGeneralDialog(
+      barrierLabel: '',
+      barrierDismissible: true,
+      transitionDuration: Duration(milliseconds: 200),
+      context: context,
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return Container();
+      },
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return ScaleTransition(
+          scale: Tween<double>(begin: 0.5,end: 1.0).animate(animation),
+          child: AlertDialog(
+            title: Center(
+                child: Text("Kesamaan Item")
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                    "Label: $label\nConfidence: ${(confidence * 100).toStringAsFixed(2)}%"),
+                const SizedBox(height: 10),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Container(
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.red
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Center(child: Text("Tutup",style: TextStyle(color: Colors.white),)),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            shape: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: BorderSide.none
+            ),
+          ),
+        );
+      },
+    );
+    isDialogShowing = false; // Set kembali ke false setelah dialog ditutup
+  }
+  Future<void> _showHighConfidenceDialog(String label, double confidence) async {
+    isDialogShowing = true; // Tandai bahwa dialog sedang tampil
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("High Confidence Detection"),
+          content: Text(
+              "Label: $label\nConfidence: ${(confidence * 100).toStringAsFixed(2)}%"),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+    isDialogShowing = false; // Set kembali ke false setelah dialog ditutup
   }
 
   void switchCamera() {
@@ -101,13 +189,11 @@ class _ScannerState extends State<Scanner> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      // Di sini Anda dapat menggunakan gambar dari galeri untuk pendeteksian
       setState(() {
         result = "Gambar dari galeri dipilih.";
       });
 
       // Tambahkan logika untuk memproses gambar yang diambil dari galeri
-      // Misalnya: panggil `Tflite.runModelOnImage`
     }
   }
 
@@ -117,6 +203,7 @@ class _ScannerState extends State<Scanner> {
     Tflite.close();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     if (cameraController == null || !cameraController!.value.isInitialized) {
@@ -129,17 +216,15 @@ class _ScannerState extends State<Scanner> {
         iconTheme: const IconThemeData(
           color: Colors.white, // Mengubah warna tombol back menjadi putih
         ),
-        title: const Text('TastyGo Scanner',style: TextStyle(
-          color: Colors.white
-        ),),
+        title: const Text('TastyGo Scanner', style: TextStyle(color: Colors.white)),
         backgroundColor: PrimaryColors(),
         actions: [
           IconButton(
-            icon: Icon(Icons.camera_front,color: Colors.white,),
+            icon: Icon(Icons.camera_front, color: Colors.white),
             onPressed: switchCamera, // Ganti kamera depan/belakang
           ),
           IconButton(
-            icon: Icon(Icons.photo_library,color: Colors.white,),
+            icon: Icon(Icons.photo_library, color: Colors.white),
             onPressed: pickImageFromGallery, // Ambil gambar dari galeri
           ),
         ],
@@ -155,7 +240,6 @@ class _ScannerState extends State<Scanner> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: _recognitions.map((recog) {
-                  // Ambil nama class dan confidence
                   String className = recog["label"] ?? 'Unknown';
                   double confidence = recog["confidence"] ?? 0.0;
 
@@ -176,15 +260,15 @@ class _ScannerState extends State<Scanner> {
                         Expanded(
                           flex: 5,
                           child: LinearProgressIndicator(
-                            value: confidence, // Nilai confidence
-                            backgroundColor: Colors.white,
-                            color: Colors.green,
-                            minHeight: 8, // Sesuaikan tinggi progress bar
+                            value: confidence,
+                            backgroundColor: SecondaryColors(),
+                            color: PrimaryColors(),
+                            minHeight: 8,
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
-                          "${(confidence * 100).toStringAsFixed(0)}%", // Tampilkan nilai confidence dalam persen
+                          "${(confidence * 100).toStringAsFixed(0)}%",
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 14.0,
