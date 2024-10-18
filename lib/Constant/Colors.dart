@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 Color PrimaryColors(){
-  return Color.fromRGBO(255, 0, 0, 1.0);
+  return Color.fromRGBO(41, 122, 37, 1.0);
 }
 Color PrimaryColorsDark(){
   return Color.fromRGBO(19, 102, 145, 1.0);

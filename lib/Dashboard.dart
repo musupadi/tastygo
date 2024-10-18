@@ -35,8 +35,7 @@ class _DashboardState extends State<Dashboard> {
           backgroundColor: PrimaryColors(),
           items: <TabItem>[
             TabItem(icon: Icons.home,title: "Home"),
-            TabItem(icon: Icons.person,title: "Profile"),
-            TabItem(icon: Icons.settings,title: "Setting")
+            TabItem(icon: Icons.person,title: "Profile")
           ],
           onTap: (int i) => _navigationBottomBar(i),
         )
