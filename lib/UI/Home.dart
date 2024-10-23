@@ -206,7 +206,9 @@ class _homeState extends State<home> {
                         child: InkWell(
                           onTap: () async {
                             final cameras = await availableCameras();
-                            toScanner(context, false,cameras);
+                            // toScanner(context, false,cameras);
+                            toScanner2(context, false, cameras);
+
                           },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,

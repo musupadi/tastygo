@@ -12,6 +12,7 @@ import 'Login.dart';
 import 'Route.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   // await Firebase.initializeApp();
   // await Firebase.initializeApp(
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
           primaryColor: PrimaryColors(),
           primaryColorDark: PrimaryColorsDark(),
           primarySwatch: Colors.blue,
-          fontFamily: 'gotham'
+          fontFamily: 'gotham',
+          visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),

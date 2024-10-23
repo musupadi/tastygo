@@ -5,6 +5,7 @@ import 'package:tastygo/Dashboard.dart';
 import 'package:tastygo/UI/Scanner.dart';
 
 import 'Login.dart';
+import 'UI/Scanner2.dart';
 
 toLogin(BuildContext context,bool instant){
   Navigator.push(
@@ -95,6 +96,37 @@ toScanner(BuildContext context,bool instant,List<CameraDescription> cameras){
               )
           {
             return Scanner(cameras: cameras);
+          }
+      )
+  );
+}
+toScanner2(BuildContext context,bool instant,List<CameraDescription> cameras){
+  Navigator.push(
+      context,
+      PageRouteBuilder(
+          transitionDuration: Duration(seconds: instant ? 0 : 2),
+          transitionsBuilder: (
+              BuildContext context,
+              Animation<double> animation,
+              Animation<double> secAnimation,
+              Widget child) {
+            animation = CurvedAnimation(
+                parent: animation,
+                curve: Curves.elasticInOut
+            );
+            return ScaleTransition(
+              scale: animation,
+              child: child,
+              alignment: Alignment.centerLeft,
+            );
+          },
+          pageBuilder: (
+              BuildContext context,
+              Animation<double> animation,
+              Animation<double> secAnimation
+              )
+          {
+            return Scanner2();
           }
       )
   );
