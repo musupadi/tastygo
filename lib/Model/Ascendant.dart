@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 import '../Constant/Colors.dart';
@@ -9,6 +10,101 @@ import '../Route.dart';
 String ImageDummy = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkxGINkXzKO1VE-jS8ED8i08kpb_2pC9lR0A&s";
 int TimeoutTimeSecond(){
   return 10;
+}
+Logouts(BuildContext context) async{
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  await pref.clear();
+  // handleSignOut();
+  toLogin(context,false);
+}
+LogoutMessage(String title,String desc,BuildContext context){
+  showGeneralDialog(
+    barrierLabel: '',
+    barrierDismissible: true,
+    transitionDuration: Duration(milliseconds: 200),
+    context: context,
+    pageBuilder: (context, animation, secondaryAnimation) {
+      return Container();
+    },
+    transitionBuilder: (context, animation, secondaryAnimation, child) {
+      return ScaleTransition(
+        scale: Tween<double>(begin: 0.5,end: 1.0).animate(animation),
+        child: AlertDialog(
+          title: Center(
+              child: Text(title)
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(desc),
+              const SizedBox(height: 10),
+              Container(
+                width: 300,
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: InkWell(
+                        onTap: () async{
+                          Logouts(context);
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(50)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Center(
+                              child: Text("Yes",
+                                style: TextStyle(
+                                    color: Colors.white
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Colors.green,
+                              borderRadius: BorderRadius.circular(50)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Center(
+                              child: Text("No",
+                                style: TextStyle(
+                                    color: Colors.white
+                                ),),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+          shape: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(16),
+              borderSide: BorderSide.none
+          ),
+        ),
+      );
+    },
+  );
 }
 LoginSuccessMessage(BuildContext context,name){
   showGeneralDialog(

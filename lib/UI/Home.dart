@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tastygo/Adapter/AdapterFood.dart';
 import 'package:tastygo/Constant/FontSize.dart';
+import 'package:tastygo/Model/SharedPreferance.dart';
 import 'package:tastygo/Model/StaticData.dart';
 import 'package:tastygo/Route.dart';
 
@@ -10,14 +11,14 @@ import '../Constant/Colors.dart';
 
 
 
-class home extends StatefulWidget {
-  home({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  Home({Key? key}) : super(key: key);
 
   @override
-  State<home> createState() => _homeState();
+  State<Home> createState() => _HomeState();
 }
 
-class _homeState extends State<home> {
+class _HomeState extends State<Home> {
   String Nama="Nama";
 
   @override
@@ -111,12 +112,17 @@ class _homeState extends State<home> {
                                 children: <Widget>[
                                   Container(
                                       margin: EdgeInsets.all(10),
-                                      child: Text("Ryeisa",
-                                        style: TextStyle(
-                                            color: PrimaryColors(),
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold
-                                        ),
+                                      child: FutureBuilder(
+                                          future: SharedName(),
+                                          builder: (context, snapshot) {
+                                            return Text(snapshot.requireData,
+                                              style: TextStyle(
+                                                  color: PrimaryColors(),
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold
+                                              ),
+                                            );
+                                          },
                                       )
                                   ),
                                 ],
@@ -206,8 +212,8 @@ class _homeState extends State<home> {
                         child: InkWell(
                           onTap: () async {
                             final cameras = await availableCameras();
-                            // toScanner(context, false,cameras);
-                            toScanner2(context, false, cameras);
+                            toScanner(context, false,cameras);
+                            // toScanner2(context, false, cameras);
 
                           },
                           child: Column(

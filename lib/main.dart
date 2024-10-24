@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String? name = prefs.getString('name');
     if (name != null) {
       // Jika name tidak null, pindah ke dashboard
-      // toDashboard(context, false);
+      toDashboard(context, false);
     } else {
       // Jika name null, tunggu 3 detik sebelum pindah ke login
       Timer(

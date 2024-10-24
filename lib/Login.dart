@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'API/API.dart';
 import 'Constant/Colors.dart';
 import 'Constant/FontSize.dart';
 import 'Model/Ascendant.dart';
@@ -34,7 +35,7 @@ class _LoginState extends State<Login> {
     }else{
       isLoading = true;
       setState(() async{
-        // isLoading = await LoginData(context, controllerUsername.text,controllerPassword.text);
+        isLoading = await LoginData(context, controllerUsername.text,controllerPassword.text);
         // isLoading = false;
       });
     }
@@ -141,8 +142,8 @@ class _LoginState extends State<Login> {
                                           children: <Widget>[
                                             InkWell(
                                               onTap: () {
-                                                // Checker();
-                                                toDashboard(context, false);
+                                                Checker();
+                                                // toDashboard(context, false);
                                               },
                                               child: Container(
                                                   width: 200,
@@ -195,77 +196,77 @@ class _LoginState extends State<Login> {
                                           height: 10,
                                         ),
                                         // Google Login Open Here
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: Divider(
-                                                height: 5,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text("OR",style: TextStyle(color: Colors.black,fontSize: LargeFontSize())),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Expanded(
-                                              child: Divider(
-                                                height: 5,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                          children: <Widget>[
-                                            InkWell(
-                                              onTap: () {
-                                                setState(() async{
-                                                  isLoading = true;
-                                                  // isLoading = await handleSignIn(context);
-                                                });
-                                                // handleSignOut();
-                                              },
-                                              child: Container(
-                                                width: 200,
-                                                height: 50,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(50),
-                                                  color: Colors.blue
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(10.0),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: [
-                                                      FaIcon(FontAwesomeIcons.google,color: Colors.white,),
-                                                      SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      Text("Login As Google",
-                                                        style: TextStyle(
-                                                            fontWeight: FontWeight.bold,
-                                                            color: Colors.white
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
-                                              ),
-                                            )
-                                          ],
-                                        )
+                                        // Row(
+                                        //   children: [
+                                        //     Expanded(
+                                        //       child: Divider(
+                                        //         height: 5,
+                                        //         color: Colors.black,
+                                        //       ),
+                                        //     ),
+                                        //     SizedBox(
+                                        //       width: 5,
+                                        //     ),
+                                        //     Text("OR",style: TextStyle(color: Colors.black,fontSize: LargeFontSize())),
+                                        //     SizedBox(
+                                        //       width: 5,
+                                        //     ),
+                                        //     Expanded(
+                                        //       child: Divider(
+                                        //         height: 5,
+                                        //         color: Colors.black,
+                                        //       ),
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                        // SizedBox(
+                                        //   height: 10,
+                                        // ),
+                                        // SizedBox(
+                                        //   height: 10,
+                                        // ),
+                                        // Row(
+                                        //   mainAxisSize: MainAxisSize.max,
+                                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        //   children: <Widget>[
+                                        //     InkWell(
+                                        //       onTap: () {
+                                        //         setState(() async{
+                                        //           isLoading = true;
+                                        //           // isLoading = await handleSignIn(context);
+                                        //         });
+                                        //         // handleSignOut();
+                                        //       },
+                                        //       child: Container(
+                                        //         width: 200,
+                                        //         height: 50,
+                                        //         decoration: BoxDecoration(
+                                        //           borderRadius: BorderRadius.circular(50),
+                                        //           color: Colors.blue
+                                        //         ),
+                                        //         child: Padding(
+                                        //           padding: const EdgeInsets.all(10.0),
+                                        //           child: Row(
+                                        //             mainAxisAlignment: MainAxisAlignment.center,
+                                        //             crossAxisAlignment: CrossAxisAlignment.center,
+                                        //             children: [
+                                        //               FaIcon(FontAwesomeIcons.google,color: Colors.white,),
+                                        //               SizedBox(
+                                        //                 width: 10,
+                                        //               ),
+                                        //               Text("Login As Google",
+                                        //                 style: TextStyle(
+                                        //                     fontWeight: FontWeight.bold,
+                                        //                     color: Colors.white
+                                        //                 ),
+                                        //               ),
+                                        //             ],
+                                        //           ),
+                                        //         )
+                                        //       ),
+                                        //     )
+                                        //   ],
+                                        // )
                                         //   Open Here
                                       ],
                                     ),

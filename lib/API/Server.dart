@@ -1,5 +1,5 @@
 String BaseURL(){
-  return "https://kembang-api.podomorouniversity.ac.id/";
+  return "https://tastygo.buatevent.id/";
 }
 String APIBaseURL(){
   return BaseURL()+"api/";
