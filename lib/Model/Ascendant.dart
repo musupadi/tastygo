@@ -11,6 +11,9 @@ String ImageDummy = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkxGI
 int TimeoutTimeSecond(){
   return 10;
 }
+int parsePrice(String price) {
+  return int.parse(price.replaceAll(',', '').replaceAll('.', '').trim());
+}
 Logouts(BuildContext context) async{
   SharedPreferences pref = await SharedPreferences.getInstance();
   await pref.clear();

@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart'; // Untuk memilih gambar dari galeri atau kamera
 import 'package:tastygo/Constant/Colors.dart';
+import 'package:tastygo/Route.dart';
 import 'package:tflite_v2/tflite_v2.dart'; // TensorFlow Lite
 
 class Scanner extends StatefulWidget {
@@ -127,7 +128,7 @@ class _ScannerState extends State<Scanner> with SingleTickerProviderStateMixin {
             TextButton(
               child: const Text("OK"),
               onPressed: () {
-                Navigator.of(context).pop();
+                toDetail(context, false);
               },
             ),
           ],
@@ -190,7 +191,6 @@ class _ScannerState extends State<Scanner> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: PrimaryColors(),

@@ -232,7 +232,7 @@ class _HomeState extends State<Home> {
                               Text("Scan",
                                 style: TextStyle(
                                     color: PrimaryColors(),
-                                    fontSize: 20,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.bold
                                 ),
                               )
@@ -260,9 +260,9 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             SizedBox(height: 10,),
-                            Text("Terdekat",style: TextStyle(
+                            Text("Cart",style: TextStyle(
                                 color: PrimaryColors(),
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold
                             ),)
                           ],
@@ -288,9 +288,9 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             SizedBox(height: 10,),
-                            Text("Favorite",style: TextStyle(
+                            Text("Reservation",style: TextStyle(
                                 color: PrimaryColors(),
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold
                             ),)
                           ],
@@ -327,7 +327,7 @@ class _HomeState extends State<Home> {
                               Text("Delivery",
                                 style: TextStyle(
                                     color: PrimaryColors(),
-                                    fontSize: 20,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.bold
                                 ),
                               )
@@ -357,7 +357,7 @@ class _HomeState extends State<Home> {
                             SizedBox(height: 10,),
                             Text("Voucher",style: TextStyle(
                                 color: PrimaryColors(),
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold
                             ),)
                           ],
@@ -385,7 +385,7 @@ class _HomeState extends State<Home> {
                             SizedBox(height: 10,),
                             Text("History",style: TextStyle(
                                 color: PrimaryColors(),
-                                fontSize: 20,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold
                             ),)
                           ],
