@@ -219,6 +219,7 @@ class _DetailscannerState extends State<Detailscanner> {
                     'Pesan Sekarang',
                     style: TextStyle(fontSize: 18,color: Colors.white),
                   ),
+
                 ),
               ),
             ),
@@ -227,7 +228,6 @@ class _DetailscannerState extends State<Detailscanner> {
       ),
     );
   }
-
   // Reusable Menu Card Widget
   Widget menuCard(String imageUrl, String name, String price) {
     return StatefulBuilder(

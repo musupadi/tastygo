@@ -106,7 +106,7 @@ class _ScannerState extends State<Scanner> with SingleTickerProviderStateMixin {
         for (var recog in recognitions) {
           double confidence = recog["confidence"] ?? 0.0;
           String label = recog["label"] ?? 'Unknown';
-          if (confidence > 0.9) {
+          if (confidence > 0.6) {
             await _showMessageDialog(label, confidence); // Menampilkan dialog dengan hasil deteksi
             break;
           }
